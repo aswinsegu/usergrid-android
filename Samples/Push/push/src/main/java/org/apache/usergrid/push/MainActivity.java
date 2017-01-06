@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,19 +28,19 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String ORG_ID = "rjwalsh";
-    public static String APP_ID = "sdk.demo";
-    public static String BASE_URL = "https://apibaas-trial.apigee.net";
+    public static String FCM_TOKEN;
 
-    public static String NOTIFIER_ID = "fcmAndroidPush";
-    public static String FCM_TOKEN = "";
-
-    public static boolean USERGRID_PREFS_NEEDS_REFRESH = false;
+    // App level Properties
+    private static final String TAG = "MainActivity";
+    private static final String NOTIFICATION_MESSAGE = "Hello Test Notification";
     private static final String USERGRID_PREFS_FILE_NAME = "usergrid_prefs.xml";
+    public static boolean USERGRID_PREFS_NEEDS_REFRESH = false;
 
-    public static UsergridClient initUsergridInstance() {
-        return Usergrid.initSharedInstance(ORG_ID,APP_ID,BASE_URL);
-    }
+    // Usergrid Properties
+    public static String BASE_URL = "http://ec2-54-174-21-46.compute-1.amazonaws.com:8080";
+    public static String ORG_ID = "usergrid";
+    public static String APP_ID = "sandbox";
+    public static String NOTIFIER_ID = "firebasePN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +66,17 @@ public class MainActivity extends AppCompatActivity {
             pushToThisDeviceButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.this.sendPush(UsergridSharedDevice.getSharedDeviceUUID(MainActivity.this),"Push To This Device");
+                    MainActivity.this.sendPush(UsergridSharedDevice.getSharedDeviceUUID(MainActivity.this),NOTIFICATION_MESSAGE);
                 }
             });
         }
+
         final Button pushToAllDevicesButton = (Button) findViewById(R.id.pushToAllDevices);
         if( pushToAllDevicesButton != null ) {
             pushToAllDevicesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.this.sendPush("*","Push To All Devices");
+                    MainActivity.this.sendPush("*",NOTIFICATION_MESSAGE);
                 }
             });
         }
@@ -112,20 +114,27 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    // Utility Methods
+    public static UsergridClient initUsergridInstance() {
+        return Usergrid.initSharedInstance(ORG_ID,APP_ID,BASE_URL);
+    }
+
     public static void registerPush(@NonNull final Context context, @NonNull final String registrationId) {
         initUsergridInstance();
         MainActivity.FCM_TOKEN = registrationId;
         UsergridAsync.applyPushToken(context, registrationId, MainActivity.NOTIFIER_ID, new UsergridResponseCallback() {
             @Override
             public void onResponse(@NonNull UsergridResponse response) {
+                Log.i(TAG, "Response :" + response.getResponseJson());
                 if( !response.ok() ) {
-                    System.out.print("Error Description :" + response.getResponseError().toString());
+                    Log.i(TAG, "Error Description :" + response.getResponseJson());
                 }
             }
         });
     }
 
     public void sendPush(@NonNull final String deviceId, @NonNull final String message) {
+        Log.i(TAG, "Description : Started");
         HashMap<String,String> notificationMap = new HashMap<>();
         notificationMap.put(MainActivity.NOTIFIER_ID,message);
         HashMap<String,HashMap<String,String>> payloadMap = new HashMap<>();
@@ -135,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
         UsergridAsync.sendRequest(notificationRequest, new UsergridResponseCallback() {
             @Override
             public void onResponse(@NonNull UsergridResponse response) {
-                System.out.print("Push request completed successfully :" + response.ok());
+                Log.i(TAG, "Push request completed successfully :" + response.getResponseJson());
                 if(!response.ok() && response.getResponseError() != null) {
-                    System.out.print("Error Description :" + response.getResponseError().toString());
+                    Log.i(TAG, "Error Description :" + response.getResponseJson());
                 }
             }
         });

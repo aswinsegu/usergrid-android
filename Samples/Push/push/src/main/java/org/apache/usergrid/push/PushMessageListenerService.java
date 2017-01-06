@@ -31,7 +31,7 @@ public class PushMessageListenerService extends FirebaseMessagingService {
                 .setContentText(message)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setWhen(when)
-                .setSmallIcon(R.drawable.usergridguy)
+                .setSmallIcon(R.drawable.usergrid_icon_small)
                 .setContentIntent(intent)
                 .build();
 
@@ -44,5 +44,4 @@ public class PushMessageListenerService extends FirebaseMessagingService {
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);
     }
-
 }

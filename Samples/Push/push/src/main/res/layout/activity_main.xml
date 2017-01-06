@@ -10,6 +10,52 @@
     tools:context=".MainActivity"
     android:background="@color/colorPrimary">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Push To All Devices"
+        android:id="@+id/pushToAllDevices"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
+        android:maxWidth="175dp"
+        android:minWidth="175dp"
+        android:background="#95b8cb"
+        android:textColor="#ffffff"
+        android:textSize="12dp"
+        android:clickable="true"
+        android:layout_above="@+id/infoButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Push To This Device"
+        android:id="@+id/pushToThisDevice"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
+        android:maxWidth="175dp"
+        android:minWidth="175dp"
+        android:background="#95b8cb"
+        android:textColor="@color/background_floating_material_light"
+        android:textSize="12dp"
+        android:clickable="true"
+        android:layout_marginBottom="13dp"
+        android:layout_above="@+id/pushToAllDevices"
+        android:layout_alignStart="@+id/pushToAllDevices" />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/infoButton"
+        android:src="@drawable/settings_icon"
+        android:background="@null"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="24dp" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,51 +65,20 @@
         android:maxHeight="175dp"
         android:maxWidth="175dp"
         android:clickable="false"
-        android:src="@drawable/usergridguy"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/pushToAllDevices" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push To All Devices"
-        android:id="@+id/pushToAllDevices"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:minHeight="175dp"
-        android:maxWidth="175dp"
-        android:minWidth="175dp"
-        android:maxHeight="175dp"
-        android:background="#95b8cb"
-        android:textColor="#ffffff"
-        android:textSize="10dp"
-        android:clickable="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push To This Device"
-        android:id="@+id/pushToThisDevice"
-        android:minHeight="175dp"
-        android:maxWidth="175dp"
-        android:minWidth="175dp"
-        android:maxHeight="175dp"
-        android:background="#95b8cb"
-        android:textColor="@color/background_floating_material_light"
-        android:textSize="10dp"
+        android:src="@drawable/usergrid_icon"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/usergridGuy"
-        android:clickable="true" />
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginTop="107dp"
+        android:layout_toStartOf="@+id/infoButton"
+        android:layout_alignEnd="@+id/infoButton" />
 
-    <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/infoButton"
-        android:src="@drawable/info"
-        android:background="@null"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/firebase_icon"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 </RelativeLayout>

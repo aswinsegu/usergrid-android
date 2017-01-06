@@ -1,41 +1,25 @@
 {
   "project_info": {
-    "project_number": "186455511595",
-    "firebase_url": "https://apigeepush.firebaseio.com",
-    "project_id": "apigeepush",
-    "storage_bucket": "apigeepush.appspot.com"
+    "project_number": "448043461004",
+    "firebase_url": "https://usergrid-push-46310.firebaseio.com",
+    "project_id": "usergrid-push-46310",
+    "storage_bucket": "usergrid-push-46310.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:186455511595:android:7ac854c0e66d35f3",
+        "mobilesdk_app_id": "1:448043461004:android:7ac854c0e66d35f3",
         "android_client_info": {
           "package_name": "org.apache.usergrid.push"
         }
       },
       "oauth_client": [
         {
-          "client_id": "186455511595-p2o4g7iug5e4tcp9vtriqqo691bhmk9h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.apache.usergrid.push",
-            "certificate_hash": "40B96A76FEA181EC71BB8E86ECD42407C469F898"
-          }
-        },
-        {
-          "client_id": "186455511595-ge27hngtfbn214e0499ufmtmnorfdptr.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "186455511595-d6kc7n52d5fq2o6g5lakqs0v6gib3h10.apps.googleusercontent.com",
+          "client_id": "448043461004-342miaev1ha7vkd103nokbigpiuq1ok3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDFqoXcWKR_c-XPxHsD7slYv0dXEksQWhA"
-        }
-      ],
+      "api_key": [ { "current_key": "AAAAaFF4qYw:APA91bHG54PvJm9INIOj1OJun5eRC66v4zhrVD5Gi9dWhyahWpJXU5ErmjUfppmJgj8OBpJJKVgHm61DpKO3GNFFYakgmKtHO84VSAoIchJCokTKWauOChPHkrT6wRwzLueq08ylw0AcxwLerAh8DlYmgTHCU3ThOw" } ],
       "services": {
         "analytics_service": {
           "status": 1
