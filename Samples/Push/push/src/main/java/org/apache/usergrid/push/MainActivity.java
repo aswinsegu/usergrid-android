@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -33,11 +35,14 @@ public class MainActivity extends AppCompatActivity {
     // App level Properties
     private static final String TAG = "MainActivity";
     private static final String NOTIFICATION_MESSAGE = "Hello Test Notification";
+    private static final String NOTIFICATION_GROUP_MESSAGE = "Hello Test Group Notification";
     private static final String USERGRID_PREFS_FILE_NAME = "usergrid_prefs.xml";
+
     public static boolean USERGRID_PREFS_NEEDS_REFRESH = false;
+    public static int BALANCE = 10;
 
     // Usergrid Properties
-    public static String BASE_URL = "http://ec2-54-174-21-46.compute-1.amazonaws.com:8080";
+    public static String BASE_URL = "http://ec2-52-90-148-67.compute-1.amazonaws.com:8080";
     public static String ORG_ID = "usergrid";
     public static String APP_ID = "sandbox";
     public static String NOTIFIER_ID = "firebasePN";
@@ -76,10 +81,83 @@ public class MainActivity extends AppCompatActivity {
             pushToAllDevicesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.this.sendPush("*",NOTIFICATION_MESSAGE);
+                    MainActivity.this.sendPush("*",NOTIFICATION_GROUP_MESSAGE);
                 }
             });
         }
+
+        // Balance Usecase
+        final EditText balanceAmtText = (EditText) findViewById(R.id.balanceAmt);
+        balanceAmtText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        final Button updateBalanceButton = (Button) findViewById(R.id.updateBalance);
+        if( updateBalanceButton != null ) {
+            updateBalanceButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( balanceAmtText != null ) {
+                        MainActivity.BALANCE = Integer.parseInt(balanceAmtText.getText().toString());
+                        updateBalance(UsergridSharedDevice.getSharedDeviceUUID(MainActivity.this), MainActivity.BALANCE);
+                    }
+                }
+            });
+        }
+
+        // Wireless Usecase
+        final Button activateWirelessButton = (Button) findViewById(R.id.activateWireless);
+        if( activateWirelessButton != null ) {
+            activateWirelessButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateWirelessStatus(UsergridSharedDevice.getSharedDeviceUUID(MainActivity.this), "Active");
+                }
+            });
+        }
+        final Button deActivateWirelessButton = (Button) findViewById(R.id.deactivateWireless);
+        if( deActivateWirelessButton != null ) {
+            deActivateWirelessButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateWirelessStatus(UsergridSharedDevice.getSharedDeviceUUID(MainActivity.this), "Inactive");
+                }
+            });
+        }
+    }
+
+    public void updateBalance(@NonNull final String deviceId, @NonNull final int balance) {
+        Log.i(TAG, "Description : Updating Balance");
+
+        HashMap<String,Integer> updateMap = new HashMap<>();
+        updateMap.put("balance", balance);
+
+        UsergridRequest notificationRequest = new UsergridRequest(UsergridEnums.UsergridHttpMethod.PUT,UsergridRequest.APPLICATION_JSON_MEDIA_TYPE,Usergrid.clientAppUrl(),null,updateMap,Usergrid.authForRequests(),"devices", deviceId);
+        UsergridAsync.sendRequest(notificationRequest, new UsergridResponseCallback() {
+            @Override
+            public void onResponse(@NonNull UsergridResponse response) {
+                Log.i(TAG, "Updated Balance successfully :" + response.getResponseJson());
+                if(!response.ok() && response.getResponseError() != null) {
+                    Log.i(TAG, "Error Description :" + response.getResponseJson());
+                }
+            }
+        });
+    }
+
+    public void updateWirelessStatus(@NonNull final String deviceId, @NonNull final String status) {
+        Log.i(TAG, "Description : Updating Wireless Status");
+
+        HashMap<String,String> updateMap = new HashMap<>();
+        updateMap.put("wireless", status);
+
+        UsergridRequest notificationRequest = new UsergridRequest(UsergridEnums.UsergridHttpMethod.PUT,UsergridRequest.APPLICATION_JSON_MEDIA_TYPE,Usergrid.clientAppUrl(),null,updateMap,Usergrid.authForRequests(),"devices", deviceId);
+        UsergridAsync.sendRequest(notificationRequest, new UsergridResponseCallback() {
+            @Override
+            public void onResponse(@NonNull UsergridResponse response) {
+                Log.i(TAG, "Updated Wireless Status successfully :" + response.getResponseJson());
+                if(!response.ok() && response.getResponseError() != null) {
+                    Log.i(TAG, "Error Description :" + response.getResponseJson());
+                }
+            }
+        });
     }
 
     @Override
@@ -134,9 +212,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendPush(@NonNull final String deviceId, @NonNull final String message) {
-        Log.i(TAG, "Description : Started");
+        Log.i(TAG, "Description : Sending PN");
+
         HashMap<String,String> notificationMap = new HashMap<>();
         notificationMap.put(MainActivity.NOTIFIER_ID,message);
+
         HashMap<String,HashMap<String,String>> payloadMap = new HashMap<>();
         payloadMap.put("payloads",notificationMap);
 

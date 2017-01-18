@@ -33,6 +33,7 @@ public class PushMessageListenerService extends FirebaseMessagingService {
                 .setWhen(when)
                 .setSmallIcon(R.drawable.usergrid_icon_small)
                 .setContentIntent(intent)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .build();
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;

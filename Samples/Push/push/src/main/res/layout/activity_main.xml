@@ -10,39 +10,6 @@
     tools:context=".MainActivity"
     android:background="@color/colorPrimary">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push To All Devices"
-        android:id="@+id/pushToAllDevices"
-        android:minHeight="30dp"
-        android:maxHeight="30dp"
-        android:maxWidth="175dp"
-        android:minWidth="175dp"
-        android:background="#95b8cb"
-        android:textColor="#ffffff"
-        android:textSize="12dp"
-        android:clickable="true"
-        android:layout_above="@+id/infoButton"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push To This Device"
-        android:id="@+id/pushToThisDevice"
-        android:minHeight="30dp"
-        android:maxHeight="30dp"
-        android:maxWidth="175dp"
-        android:minWidth="175dp"
-        android:background="#95b8cb"
-        android:textColor="@color/background_floating_material_light"
-        android:textSize="12dp"
-        android:clickable="true"
-        android:layout_marginBottom="13dp"
-        android:layout_above="@+id/pushToAllDevices"
-        android:layout_alignStart="@+id/pushToAllDevices" />
-
     <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -56,29 +23,97 @@
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="24dp" />
 
-    <ImageView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/usergridGuy"
-        android:minWidth="175dp"
-        android:minHeight="175dp"
-        android:maxHeight="175dp"
-        android:maxWidth="175dp"
-        android:clickable="false"
-        android:src="@drawable/usergrid_icon"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_marginTop="107dp"
-        android:layout_toStartOf="@+id/infoButton"
-        android:layout_alignEnd="@+id/infoButton" />
+        android:text="Push To All Devices"
+        android:id="@+id/pushToAllDevices"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
+        android:maxWidth="200dp"
+        android:minWidth="200dp"
+        android:background="#95b8cb"
+        android:textColor="#ffffff"
+        android:textSize="14dp"
+        android:clickable="true"
+        android:layout_below="@+id/pushToThisDevice"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
 
-    <ImageView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/firebase_icon"
-        android:id="@+id/imageView"
+        android:id="@+id/balanceAmt"
+        android:inputType="number"
+        android:digits="0123456789"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:minWidth="150dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="30dp"
+        android:hint="Balance Amount"
+        android:paddingStart="10dp"
+        android:minHeight="30dp"
+        android:maxLines="1"
+        android:maxWidth="300dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Balance"
+        android:id="@+id/updateBalance"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/balanceAmt"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activate Wireless"
+        android:id="@+id/activateWireless"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
+        android:maxWidth="200dp"
+        android:minWidth="200dp"
+        android:background="#95b8cb"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/updateBalance"
+        android:layout_alignStart="@+id/pushToThisDevice" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="De-Activate Wireless"
+        android:id="@+id/deactivateWireless"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
+        android:maxWidth="200dp"
+        android:minWidth="200dp"
+        android:background="#95b8cb"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:layout_below="@+id/activateWireless"
+        android:layout_alignStart="@+id/pushToThisDevice"
+        android:layout_marginTop="29dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Push To This Device"
+        android:id="@+id/pushToThisDevice"
+        android:minHeight="30dp"
+        android:maxHeight="30dp"
+        android:maxWidth="200dp"
+        android:minWidth="200dp"
+        android:background="#95b8cb"
+        android:textColor="@color/background_floating_material_light"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/deactivateWireless"
+        android:layout_alignStart="@+id/pushToAllDevices" />
 </RelativeLayout>
